@@ -1,0 +1,7 @@
+{
+  "name": "ApLogFire",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

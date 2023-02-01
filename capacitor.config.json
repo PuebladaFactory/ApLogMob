@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ApLogFire",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

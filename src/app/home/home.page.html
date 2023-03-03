@@ -1,24 +1,30 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button (click)="logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title> Mi Perfil </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content class="ion-padding">
-  <div class="preview">
-    <ion-avatar (click)="changeImage()">
-      <img *ngIf="profile?.imageUrl; else placeholder_avatar;" [src]="profile.imageUrl" />
 
-      <ng-template #placeholder_avatar>
-        <div class="fallback">
-          <p>Select avatar</p>
-        </div>
-      </ng-template>
-    </ion-avatar>
-  </div>
-</ion-content>
+
+
+
+
+
+
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="perfil">
+      <ion-icon aria-hidden="true" name="triangle"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="ops">
+      <ion-icon aria-hidden="true" name="ellipse"></ion-icon>
+      <ion-label>Ops</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="legajo">
+      <ion-icon aria-hidden="true" name="square"></ion-icon>
+      <ion-label>Legajo</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
+
+

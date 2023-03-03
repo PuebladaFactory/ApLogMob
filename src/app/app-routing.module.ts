@@ -11,7 +11,7 @@ const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
     ...canActivate(redirectLoggedInToHome),
@@ -23,10 +23,20 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin),
   },
   {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full',
-  },
+		path: '',
+		redirectTo: '/login',
+		pathMatch: 'full'
+	},
+
+
+
+  // {
+  //   path: '**',
+  //   redirectTo: '',
+  //   pathMatch: 'full',
+  // },
+
+
 ];
 
 @NgModule({

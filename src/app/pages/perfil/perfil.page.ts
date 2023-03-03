@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
-import { AvatarService } from '../services/avatar.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { AvatarService } from 'src/app/services/avatar.service';
+
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-perfil',
+  templateUrl: './perfil.page.html',
+  styleUrls: ['./perfil.page.scss'],
 })
-export class HomePage {
+export class PerfilPage implements OnInit {
+
+
+  ngOnInit() {
+  }
   profile = null;
 
   constructor(

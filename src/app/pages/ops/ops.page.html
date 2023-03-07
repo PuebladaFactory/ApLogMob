@@ -1,9 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>ops</ion-title>
-  </ion-toolbar>
+
+<ion-header> 
+<ion-toolbar color="primary">
+  <ion-title> Vantruck | Operaciones</ion-title>
+</ion-toolbar>
+&nbsp;
 </ion-header>
 
 <ion-content>
-Operaciones Pendientes
+  <ion-title>Operaciones Pendientes</ion-title>
+
+  <ion-list class="animate__animated animate__slideInUp animate__fast">
+    <ion-item *ngFor="let item of arr; let index = index">
+      <ion-label>Item {{ index + 1 }}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

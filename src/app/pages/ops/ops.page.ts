@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OpsPage implements OnInit {
 
+
+  public arr = new Array(25);
   constructor() { }
 
   ngOnInit() {

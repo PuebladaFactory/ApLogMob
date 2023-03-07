@@ -1,25 +1,74 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <ion-title slot="start"> Vantruck | Mi Perfil</ion-title>
+    <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title> Mi Perfil </ion-title>
   </ion-toolbar>
+  &nbsp;
 </ion-header>
 
-
 <ion-content class="ion-padding">
-  <div class="preview">
-    <ion-avatar (click)="changeImage()">
-      <img *ngIf="profile?.imageUrl; else placeholder_avatar;" [src]="profile.imageUrl" />
+  <ion-card color="light">
+    <div class="img-wrapper">
+      <ion-avatar>
+        <img
+          *ngIf="profile?.imageUrl; else placeholder_avatar;"
+          [src]="profile.imageUrl"
+        />
 
-      <ng-template #placeholder_avatar>
-        <div class="fallback">
-          <p>Select avatar</p>
+        <ng-template #placeholder_avatar>
+          <!-- <div class="fallback"> -->
+          <div>
+            <p>Select avatar</p>
+          </div>
+        </ng-template>
+      </ion-avatar>
+
+      <ion-button color="light" (click)="changeImage()">
+        <ion-icon slot="icon-only" name="camera-outline" color="medium">
+        </ion-icon>
+      </ion-button>
+    </div>
+
+    <ion-card-content class="ion-text-center">
+      <h2>Nombre</h2>
+      <ion-text color="medium">
+        <div style="display: flex" class="ion-justify-content-center">
+          <ion-icon name="location-outline" color="medium"> </ion-icon>
+          <p>Direccion</p>
         </div>
-      </ng-template>
-    </ion-avatar>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-segment (ionChange)="segmentChanged($event)" value="list">
+    <ion-segment-button value="list">
+      <ion-label> Datos Personales </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="card">
+      <ion-label> Legajo </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-list
+    class="animate__animated animate__slideInUp animate__fast"
+    *ngIf="segment === 'list'"
+  >
+    <ion-item *ngFor="let item of arr; let index = index">
+      <ion-label>Item {{ index + 1 }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div
+    class="animate__animated animate__slideInUp animate__fast"
+    *ngIf="segment === 'card'"
+  >
+    <ion-card *ngFor="let item of arr; let index = index">
+      <ion-card-content>
+        <h2>Card {{ index + 1 }}</h2>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

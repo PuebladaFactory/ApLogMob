@@ -18,6 +18,9 @@ export class PerfilPage implements OnInit {
   }
   profile = null;
 
+  public segment: string = "list";
+  public arr = new Array(25);
+
   constructor(
     private avatarService: AvatarService,
     private authService: AuthService,
@@ -60,5 +63,12 @@ export class PerfilPage implements OnInit {
         await alert.present();
       }
     }
+  }
+
+
+
+  
+  segmentChanged(ev: any) {
+    this.segment = ev.detail.value;
   }
 }

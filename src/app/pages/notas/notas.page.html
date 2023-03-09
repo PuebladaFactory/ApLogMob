@@ -1,0 +1,21 @@
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/create">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <ion-item *ngFor="let song of songList | async" routerLink="/detail/{{song.id}}">
+    <ion-label>
+      <h2>{{ song.songName}}</h2>
+      <p>Artist Name: {{ song.artistName }}</p>
+    </ion-label>
+  </ion-item>
+</ion-content>

@@ -46,7 +46,7 @@ async createNota() {
     .then(
       () => {
         loading.dismiss().then(() => {
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('/home/notas');
         });
       },
       error => {

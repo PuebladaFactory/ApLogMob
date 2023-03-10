@@ -17,7 +17,7 @@ export class CreatePage implements OnInit {
   ngOnInit() {
   }
 
-  createSongForm: FormGroup;
+  createNotaForm: FormGroup;
 constructor(
   private readonly loadingCtrl: LoadingController,
   private readonly alertCtrl: AlertController,
@@ -25,26 +25,24 @@ constructor(
   formBuilder: FormBuilder,
   private router: Router
 ) {
-  this.createSongForm = formBuilder.group({
-    albumName: ['', Validators.required],
-    artistName: ['', Validators.required],
-    songDescription: ['', Validators.required],
-    songName: ['', Validators.required],
+  this.createNotaForm = formBuilder.group({
+    titulo: ['', Validators.required],
+    comentario: ['', Validators.required],
+ 
   });
 }
 
 
 
-async createSong() {
+async createNota() {
   const loading = await this.loadingCtrl.create();
 
-  const albumName = this.createSongForm.value.albumName;
-  const artistName = this.createSongForm.value.artistName;
-  const songDescription = this.createSongForm.value.songDescription;
-  const songName = this.createSongForm.value.songName;
+  const titulo = this.createNotaForm.value.titulo;
+  const comentario = this.createNotaForm.value.comentario;
+
 
   this.firestoreService
-    .createSong(albumName, artistName, songDescription, songName)
+    .createNota(titulo, comentario)
     .then(
       () => {
         loading.dismiss().then(() => {

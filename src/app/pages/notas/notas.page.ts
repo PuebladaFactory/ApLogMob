@@ -17,7 +17,7 @@ export class NotasPage implements OnInit {
   ngOnInit() {
   }
 
-  songList: Observable<any[]> = this.firestoreService.getSongList();
+  notasList: Observable<any[]> = this.firestoreService.getNotasList();
   constructor(
     private firestoreService: FirestoreService
   ) { }

@@ -34,8 +34,9 @@ const routes: Routes = [
         import('../pages/notas/notas.module').then( m => m.NotasPageModule)
       },
       {
-        path: 'create',
-        loadChildren: () => import('../pages/create/create.module').then( m => m.CreatePageModule)
+        path: 'notas/create',
+        loadChildren: () => 
+        import('../pages/create/create.module').then( m => m.CreatePageModule)
       },
       {
         path: 'details/:id',

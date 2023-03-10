@@ -11,26 +11,23 @@ export class FirestoreService {
 
   constructor(private readonly firestore: Firestore) {}
 
-  createSong(
-    albumName: string,
-    artistName: string,
-    songDescription: string,
-    songName: string
+  createNota(
+    titulo: string,
+    comentario: string,
+
   ): Promise<any> {
-    let id:""
+  
     return addDoc(collection(this.firestore, "notas"), {
-      id,
-      albumName,
-      artistName,
-      songDescription,
-      songName,
+    
+   titulo, 
+   comentario
     });
   }
 
 
   // We create the function:
-getSongList(): Observable<any[]> {
-  return collectionData<any>(collection(this.firestore, 'songList'), {
+getNotasList(): Observable<any[]> {
+  return collectionData<any>(collection(this.firestore, 'notas'), {
     idField: 'id',
   });
 }

@@ -3,19 +3,18 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ song?.songName }}</ion-title>
+    <!-- <ion-title>{{ nota?.titulo }}</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h3>Artist</h3>
-  <p>The song {{ song?.songName }} was released by {{ song?.artistName }}.</p>
+  <h3>Titulo</h3>
+  <p>{{ nota?.titulo }}.</p>
 
-  <h3>Album</h3>
-  <p>It was part of the {{ song?.albumName }} album.</p>
+  <h3>Comentario</h3>
+  <p>{{ nota?.comentario }} </p>
 
-  <h3>Description</h3>
-  <p>{{ song?.songDescription }}</p>
 
-  <!-- <ion-button expand="block" (click)="deleteSong()"> DELETE SONG </ion-button> -->
+
+  <ion-button expand="block" (click)="deleteNota(nota.id, nota.titulo)"> Borrar nota </ion-button>
 </ion-content>

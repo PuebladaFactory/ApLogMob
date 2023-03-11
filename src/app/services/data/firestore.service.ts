@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collectionData, collection, addDoc, Firestore, doc, docData } from '@angular/fire/firestore';
+import { collectionData, collection, addDoc, Firestore, doc, docData, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class FirestoreService {
   constructor(private readonly firestore: Firestore) {}
 
   createNota(
+    
     titulo: string,
     comentario: string,
 
@@ -34,12 +35,18 @@ getNotasList(): Observable<any[]> {
 
 
 
-getSongDetail(songId: string): Observable<any> {
-  const songRef = doc(this.firestore, `songList/${songId}`);
-  return docData<any>(songRef, {
+getNotaDetail(notaId: string): Observable<any> {
+  const notaRef = doc(this.firestore, `notas/${notaId}`);
+  return docData<any>(notaRef, {
     idField: 'id'
   });
 }
 
+
+deleteNota(notaId: string): Promise<void> {
+  const notaDocRef = doc(this.firestore, `notas/${notaId}`);
+  return deleteDoc(notaDocRef);
+
+}
 
 }

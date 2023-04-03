@@ -14,7 +14,13 @@
   <h3>Comentario</h3>
   <p>{{ nota?.comentario }} </p>
 
+<h3>Docs</h3>
 
-
+<p>Aca van las imagenes</p>
+<ion-button color="light" (click)="changeImage()">
+  <ion-icon slot="icon-only" name="camera-outline" color="medium">
+  </ion-icon>
+</ion-button>
   <ion-button expand="block" (click)="deleteNota(nota.id, nota.titulo)"> Borrar nota </ion-button>
 </ion-content>
+

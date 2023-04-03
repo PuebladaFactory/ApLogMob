@@ -51,4 +51,7 @@ export class DetailsPage implements OnInit {
 
 
   }
+
+
+  changeImage(){}
 }

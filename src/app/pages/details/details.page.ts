@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FirestoreService } from 'src/app/services/data/firestore.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-details',
@@ -10,16 +11,20 @@ import { FirestoreService } from 'src/app/services/data/firestore.service';
 })
 export class DetailsPage implements OnInit {
 
+
+
   nota: any;
   constructor(
     private firestoreService: FirestoreService,
     private route: ActivatedRoute, 
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
     const notaId: string = this.route.snapshot.paramMap.get('id');
+    this.nota.Id=notaId
     this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
       this.nota = nota;
     });
@@ -49,6 +54,17 @@ export class DetailsPage implements OnInit {
   
     await alert.present();
 
+
+  }
+
+
+  async updateNote() {
+    await this.firestoreService.updateNote(this.nota);
+    const toast = await this.toastCtrl.create({
+      message: 'Note updated!.',
+      duration: 2000
+    });
+    toast.present();
 
   }
 

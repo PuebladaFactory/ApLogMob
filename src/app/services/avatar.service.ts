@@ -25,8 +25,6 @@ export class AvatarService {
     return docData(userDocRef);
   }
 
-  // sube la imagen al storage, tmma la url y la almacena en firestore.
-
   async uploadImage(cameraFile: Photo) {
     const user = this.auth.currentUser;
     const path = `uploads/${user.uid}/profile.png`;

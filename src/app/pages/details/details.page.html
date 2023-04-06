@@ -9,8 +9,7 @@
 
 <ion-content class="ion-padding">
   <h3>Titulo</h3>
-  <ion-input [(ngModel)]="nota.titulo"></ion-input>
-  <!-- <p>{{ nota?.titulo }}.</p> -->
+  <p>{{ nota?.titulo }}.</p>
 
   <h3>Comentario</h3>
   <p>{{ nota?.comentario }} </p>
@@ -21,10 +20,6 @@
 <ion-button color="light" (click)="changeImage()">
   <ion-icon slot="icon-only" name="camera-outline" color="medium">
   </ion-icon>
-  <ion-button expand="block" color="success" (click)="updateNote()">
-    <ion-icon name="save" slot="start"></ion-icon>
-    Update
-  </ion-button>
 </ion-button>
   <ion-button expand="block" (click)="deleteNota(nota.id, nota.titulo)"> Borrar nota </ion-button>
 </ion-content>

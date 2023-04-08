@@ -1,26 +1,36 @@
 <ion-header>
   <ion-toolbar>
+
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <!-- <ion-title>{{ nota?.titulo }}</ion-title> -->
+
+
+    <ion-title>Details</ion-title>
   </ion-toolbar>
 </ion-header>
+
+
 
 <ion-content class="ion-padding">
   <h3>Titulo</h3>
   <p>{{ nota?.titulo }}.</p>
 
   <h3>Comentario</h3>
-  <p>{{ nota?.comentario }} </p>
+  <p>{{ nota?.comentario }}</p>
 
-<h3>Docs</h3>
+  <h3>Docs</h3>
 
-<p>Aca van las imagenes</p>
-<ion-button color="light" (click)="changeImage()">
-  <ion-icon slot="icon-only" name="camera-outline" color="medium">
-  </ion-icon>
-</ion-button>
-  <ion-button expand="block" (click)="deleteNota(nota.id, nota.titulo)"> Borrar nota </ion-button>
+  <p>Aca van las imagenes</p>
+  <ion-button color="light" (click)="changeImage()">
+    <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
+  </ion-button>
+
+  <ion-button expand="block" routerLink="/home/notas/edit">
+     Editar
+    <!-- <ion-icon name="create-outline"></ion-icon> -->
+  </ion-button>
+  <ion-button expand="block" (click)="deleteNota(nota.id, nota.titulo)">
+    Borrar 
+  </ion-button>
 </ion-content>
-

@@ -44,6 +44,14 @@ const routes: Routes = [
       },
 
       {
+        path: 'notas/edit',
+        loadChildren: () => 
+        import('../pages/edit/edit.module').then( m => m.EditPageModule)
+      },
+
+
+
+      {
         path: "",
         redirectTo: "/home/ops",
         pathMatch: "full",

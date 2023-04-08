@@ -22,6 +22,7 @@ export class DetailsPage implements OnInit {
     const notaId: string = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
       this.nota = nota;
+      this.nota.id=notaId
     });
   }
 

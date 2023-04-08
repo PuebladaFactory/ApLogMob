@@ -47,4 +47,6 @@ export class FirestoreService {
     const noteDocRef = doc(this.firestore, `notes/${nota.id}`);
     return updateDoc(noteDocRef, { titulo: nota.titulo , comentario: nota.comentario });
   }
+
+  
 }

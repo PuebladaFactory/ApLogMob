@@ -1,15 +1,28 @@
+
 <ion-header>
   <ion-toolbar>
-
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-
-
-    <ion-title>edit</ion-title>
+    <ion-title>Editar Nota</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-
+<ion-content class="ion-padding">
+  <!-- <form [formGroup]="editNotaForm" (ngSubmit)="onSubmit()" novalidate> -->
+    <form [formGroup]="editNotaForm" (submit)="editarNota()">
+    <ion-item>
+      <ion-input placeholder="Titulo de la Nota" autofocus=true formControlName="titulo"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-textarea placeholder="Enter your notes here..." rows="10" formControlName="comentario"></ion-textarea>
+    </ion-item>
+  
+    <ion-button expand="block" type="submit" [disabled]="!editNotaForm.valid">
+      Agregar nota
+    </ion-button>
+  </form>
 </ion-content>
+
+
+

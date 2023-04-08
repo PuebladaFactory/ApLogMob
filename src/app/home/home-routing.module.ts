@@ -44,7 +44,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'notas/edit',
+        path: 'notas/edit/:id',
         loadChildren: () => 
         import('../pages/edit/edit.module').then( m => m.EditPageModule)
       },

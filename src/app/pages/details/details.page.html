@@ -26,7 +26,9 @@
     <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
   </ion-button>
 
-  <ion-button expand="block" routerLink="/home/notas/edit">
+  <ion-button expand="block"
+   routerLink="/home/notas/edit/{{nota?.id}}">
+
      Editar
     <!-- <ion-icon name="create-outline"></ion-icon> -->
   </ion-button>
@@ -34,3 +36,5 @@
     Borrar 
   </ion-button>
 </ion-content>
+
+

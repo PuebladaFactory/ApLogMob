@@ -18,7 +18,8 @@ export class HomePage {
     private authService: AuthService,
     private router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController, 
+    
   ) {
     this.avatarService.getUserProfile().subscribe((data) => {
       this.profile = data;

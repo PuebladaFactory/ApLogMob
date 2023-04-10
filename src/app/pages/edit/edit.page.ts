@@ -11,7 +11,8 @@ import { FirestoreService } from "src/app/services/data/firestore.service";
 })
 export class EditPage implements OnInit {
 
-  nota: any
+  nota: any;
+  campos: any[] = [];
 
   editNotaForm: FormGroup;
 
@@ -27,27 +28,56 @@ export class EditPage implements OnInit {
     this.editNotaForm = formBuilder.group({
       titulo: ["", Validators.required],
       comentario: ["", Validators.required],
+      id:["", Validators.required]
     });
   }
     
-  // ngOnInit() {
-  //   const notaId: string = this.route.snapshot.paramMap.get('id');
-  //   this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
-  //     this.nota = nota;
-  //   });
-  // }
+  agregarCampo() {
+    const nuevoCampo = {
+      label: 'Nuevo campo',
+      nombre: `campo_${this.campos.length}`,
+      placeholder: 'Ingrese el valor del campo'
+    };
+    this.campos.push(nuevoCampo);
+    this.editNotaForm.addControl(nuevoCampo.nombre, this.formBuilder.control(''));
+  }
 
-editarNota(){}
   ngOnInit() {
     const notaId: string = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
       this.nota = nota;
       this.editNotaForm.patchValue({
         titulo: nota.titulo,
-        comentario: nota.comentario
+        comentario: nota.comentario,
+        id: nota.id
       });
+      console.log(this.nota)
     });
   }
+
+
+  async editarNota() {
+    const loading = await this.loadingCtrl.create();
+
+    const nota = this.editNotaForm.value;
+  
+
+  this.firestoreService.updateNota(nota).then(
+    () => {
+      loading.dismiss().then(() => {
+        this.router.navigateByUrl("/home/notas");
+      });
+    },
+    (error) => {
+      loading.dismiss().then(() => {
+        console.error(error);
+      });
+    }
+  );
+
+  return await loading.present();
+}
+
 
 }
 

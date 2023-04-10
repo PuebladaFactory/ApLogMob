@@ -17,11 +17,15 @@ import { Observable } from "rxjs";
 export class FirestoreService {
   constructor(private readonly firestore: Firestore) {}
 
-  createNota(titulo: string, comentario: string): Promise<any> {
-    return addDoc(collection(this.firestore, "notas"), {
-      titulo,
-      comentario,
-    });
+  // createNota(titulo: string, comentario: string): Promise<any> {
+  //   return addDoc(collection(this.firestore, "notas"), {
+  //     titulo,
+  //     comentario,
+  //   });
+  // }
+
+  createNota(nota: any): Promise<any> {
+    return addDoc(collection(this.firestore, "notas"), nota);
   }
 
   // We create the function:
@@ -43,10 +47,9 @@ export class FirestoreService {
     return deleteDoc(notaDocRef);
   }
 
-  updateNote(nota: any): Promise<void>{
-    const noteDocRef = doc(this.firestore, `notes/${nota.id}`);
-    return updateDoc(noteDocRef, { titulo: nota.titulo , comentario: nota.comentario });
+  updateNota(nota: any): Promise<void> {
+    const noteDocRef = doc(this.firestore, `notas/${nota.id}`);
+    return updateDoc(noteDocRef, nota);
   }
-
   
 }

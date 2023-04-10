@@ -10,7 +10,10 @@ import { FirestoreService } from 'src/app/services/data/firestore.service';
 })
 export class DetailsPage implements OnInit {
 
+
   nota: any;
+  otherFields: string[] = [];
+
   constructor(
     private firestoreService: FirestoreService,
     private route: ActivatedRoute, 
@@ -22,7 +25,9 @@ export class DetailsPage implements OnInit {
     const notaId: string = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
       this.nota = nota;
-      this.nota.id=notaId
+      this.nota.id = notaId;
+      // Obtener los nombres de los campos adicionales
+      this.otherFields = Object.keys(nota).filter(key => key !== 'titulo' && key !== 'comentario');
     });
   }
 

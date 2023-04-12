@@ -12,72 +12,101 @@ import { FirestoreService } from "src/app/services/data/firestore.service";
 export class EditPage implements OnInit {
 
   nota: any;
-  campos: any[] = [];
-
-  editNotaForm: FormGroup;
-
+  otherFields: string[] = [];
+  editMode: boolean = false; // variable para cambiar entre modo vista y modo edición
+  editNota: any; // variable para almacenar los cambios de edición
+  notaForm: FormGroup;
 
   constructor(
-    private readonly loadingCtrl: LoadingController,
-    private readonly alertCtrl: AlertController,
     private firestoreService: FirestoreService,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute, 
-    private router: Router
-  ) {
-    this.editNotaForm = formBuilder.group({
-      titulo: ["", Validators.required],
-      comentario: ["", Validators.required],
-      id:["", Validators.required]
-    });
-  }
-    
-  agregarCampo() {
-    const nuevoCampo = {
-      label: 'Nuevo campo',
-      nombre: `campo_${this.campos.length}`,
-      placeholder: 'Ingrese el valor del campo'
-    };
-    this.campos.push(nuevoCampo);
-    this.editNotaForm.addControl(nuevoCampo.nombre, this.formBuilder.control(''));
-  }
+    private route: ActivatedRoute,
+    private alertController: AlertController,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
     const notaId: string = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
       this.nota = nota;
-      this.editNotaForm.patchValue({
-        titulo: nota.titulo,
-        comentario: nota.comentario,
-        id: nota.id
-      });
-      console.log(this.nota)
+      this.nota.id = notaId;
+      
+      // Obtener los nombres de los campos adicionales
+      this.otherFields = Object.keys(nota).filter(
+        key => key !== 'titulo' && key !== 'comentario'
+      );
+
+            // Crear el formulario con valores iniciales
+            this.notaForm = this.formBuilder.group({
+              titulo: [this.nota.titulo, Validators.required],
+              comentario: [this.nota.comentario, Validators.required]
+            });
+      
+            // Agregar los campos adicionales al formulario
+            this.otherFields.forEach(field => {
+              this.notaForm.addControl(field, this.formBuilder.control(this.nota[field]));
+            });
+          });
+        }
+      // Clonar la nota para que los cambios en el formulario no afecten a la vista
+      // this.editNota = { ...nota };
+
+
+  async deleteNota(notaId: string, titulo: string): Promise<void> {
+    const alert = await this.alertController.create({
+      message: `Seguro de borrar ? ${titulo}?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: blah => {
+            console.log('Confirma cancelacion');
+          },
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            this.firestoreService.deleteNota(notaId).then(() => {
+              this.router.navigateByUrl('home/notas');
+            });
+          },
+        },
+      ],
     });
+
+    await alert.present();
   }
 
 
-  async editarNota() {
-    const loading = await this.loadingCtrl.create();
-
-    const nota = this.editNotaForm.value;
   
 
-  this.firestoreService.updateNota(nota).then(
-    () => {
-      loading.dismiss().then(() => {
-        this.router.navigateByUrl("/home/notas");
-      });
-    },
-    (error) => {
-      loading.dismiss().then(() => {
-        console.error(error);
-      });
-    }
-  );
+  changeImage() {}
 
-  return await loading.present();
+  toggleEditMode() {
+    // Cambiar entre modo vista y modo edición
+    this.editMode = !this.editMode;
+    // Clonar la nota para que los cambios en el formulario no afecten a la vista
+    this.editNota = { ...this.nota };
+  }
+
+  // saveChanges() {
+  //   // Actualizar la nota con los cambios realizados en el formulario
+  //   this.nota = { ...this.editNota };
+  //   // Guardar la nota actualizada en la base de datos
+  //   this.firestoreService.updateNota(this.nota).then(() => {
+  //     // Cambiar de vuelta a modo vista
+  //     this.editMode = false;
+  //   });
+  // }
+
+  onSubmit(): void {
+    console.log("editado", this.nota)
+    // Actualizar la nota con los valores del formulario
+  //   const notaId: string = this.route.snapshot.paramMap.get('id');
+  //   this.nota = { ...this.nota, ...this.notaForm.value };
+  //   this.firestoreService.updateNota(notaId, this.nota).then(() => {
+  //     this.router.navigateByUrl('home/notas');
+  //   });
+  // }
 }
-
-
 }
-

@@ -1,31 +1,59 @@
-
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Editar Nota</ion-title>
+  <ion-buttons slot="start">
+  <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>{{ editMode ? 'Editar nota' : 'Detalles' }}</ion-title>
+  <ion-buttons slot="end" *ngIf="editMode">
+  <ion-button (click)="onSubmit()">
+  <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+  </ion-button>
+  </ion-buttons>
   </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <!-- <form [formGroup]="editNotaForm" (ngSubmit)="onSubmit()" novalidate> -->
-    <form [formGroup]="editNotaForm" (submit)="editarNota()">
-    <ion-item>
-      <ion-input placeholder="Titulo de la Nota" autofocus=true formControlName="titulo"></ion-input>
-    </ion-item>
+  </ion-header>
   
-    <ion-item>
-      <ion-textarea placeholder="Enter your notes here..." rows="10" formControlName="comentario"></ion-textarea>
-    </ion-item>
-  
-    <ion-button expand="block" type="submit" [disabled]="!editNotaForm.valid">
-      Guardar Cambios
+  <ion-content class="ion-padding">
+    <form *ngIf="editMode" [formGroup]="notaForm">
+      <ion-item>
+        <ion-label position="stacked">Título</ion-label>
+        <ion-input formControlName="titulo" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Comentario</ion-label>
+        <ion-textarea formControlName="comentario"></ion-textarea>
+      </ion-item>
+      <ion-item *ngFor="let field of otherFields">
+        <ion-label>{{ field }}</ion-label>
+        <ion-input formControlName="{{ field }}" type="text"></ion-input>
+      </ion-item>
+    </form>
+    <div *ngIf="!editMode">
+      <h3>Titulo</h3>
+      <p>{{ nota?.titulo }}</p>
+      <h3>Comentario</h3>
+      <p>{{ nota?.comentario }}</p>
+      <h3>Otros campos</h3>
+      <ion-list>
+        <ion-item *ngFor="let field of otherFields">
+          <ion-label>{{ field }}</ion-label>
+          <ion-input [value]="nota[field]" disabled></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+
+
+    
+    <h3>Docs</h3>
+    <p>Aca van las imagenes</p>
+    <ion-button color="light" (click)="changeImage()" *ngIf="editMode">
+      <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
     </ion-button>
-  </form>
-
-
-</ion-content>
-
-
-
-
+    <div class="buttons" *ngIf="!editMode">
+      <ion-button expand="block" (click)="toggleEditMode()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button expand="block" (click)="deleteNota(nota?.id, nota?.titulo)">
+        Borrar 
+      </ion-button>
+    </div>
+  </ion-content>

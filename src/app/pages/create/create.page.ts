@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import { Router } from "@angular/router";
 import { LoadingController, AlertController } from "@ionic/angular";
 import { FirestoreService } from "src/app/services/data/firestore.service";
@@ -10,7 +15,6 @@ import { FirestoreService } from "src/app/services/data/firestore.service";
   styleUrls: ["./create.page.scss"],
 })
 export class CreatePage implements OnInit {
-
   createNotaForm: FormGroup;
   campos: { nombre: string; label: string; placeholder: string }[] = [];
 
@@ -34,7 +38,10 @@ export class CreatePage implements OnInit {
     const label = `Campo ${this.campos.length + 1}`;
     const placeholder = `Valor ${this.campos.length + 1}`;
 
-    this.createNotaForm.addControl(nombre, new FormControl("", Validators.required));
+    this.createNotaForm.addControl(
+      nombre,
+      new FormControl("", Validators.required)
+    );
     this.campos.push({ nombre, label, placeholder });
   }
 

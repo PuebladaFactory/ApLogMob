@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/notas"></ion-back-button>
+      <ion-back-button defaultHref="home/notas"></ion-back-button>
+
+ 
     </ion-buttons>
     <ion-title>Editar nota</ion-title>
     <!-- <ion-buttons slot="end">
@@ -36,10 +38,10 @@
 <ion-content>
   <ion-card *ngIf="!editMode">
     <ion-card-header>
-      <ion-card-title>{{nota.titulo}}</ion-card-title>
+      <ion-card-title>{{nota?.titulo}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>{{nota.comentario}}</p>
+      <p>{{nota?.comentario}}</p>
       <ion-list>
         <ion-item *ngFor="let field of otherFields">
           <ion-label>{{field}}</ion-label>

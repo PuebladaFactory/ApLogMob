@@ -66,4 +66,32 @@ export class EditPage implements OnInit {
     // Send the updated document to the server
     // this.myDataService.updateDocument(this.documentId, updatedDocument).subscribe();
   }
+
+
+  async deleteNota(notaId: string, titulo: string): Promise<void> {
+    const alert = await this.alertController.create({
+      message: `Seguro de borrar ? ${titulo}?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: blah => {
+            console.log('Confirma cancelacion');
+          },
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            this.firestoreService.deleteNota(notaId).then(() => {
+              this.router.navigateByUrl('home/notas');
+            });
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
+
+
+  }
 }

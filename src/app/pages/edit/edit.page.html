@@ -1,3 +1,15 @@
+<form [formGroup]="documentForm" (submit)="onSubmit()">
+  <ion-item *ngFor="let control of documentForm.controls | keyvalue">
+    <ion-label position="stacked">{{control.key}}</ion-label>
+    <ion-input type="text" [formControlName]="control.key"></ion-input>
+    <ion-button color="danger" (click)="removeField(control.key)">Remove</ion-button>
+  </ion-item>
+  <ion-button color="primary" (click)="addField()">Add Field</ion-button>
+  <ion-button type="submit" color="primary">Submit</ion-button>
+
+</form>
+
+<!-- 
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -7,8 +19,24 @@
       ></ion-back-button>
     </ion-buttons>
     <ion-title>Editar</ion-title>
+    <ion-buttons slot="end">
+
+
+      <ion-button (click)="addField()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" 
+      (click)="deleteNota(nota?.id, nota?.titulo)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+      <ion-button  (click)="onSubmit()">
+        <ion-icon slot="icon-only" name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 <ion-content class="ion-padding">
   <form [formGroup]="documentForm" (submit)="onSubmit()">
     <ion-item *ngFor="let control of documentForm.controls | keyvalue">
@@ -24,7 +52,9 @@
 
   
     </ion-item>
-    <ion-button color="primary" (click)="addField()">Add Field</ion-button>
-    <ion-button type="submit" color="primary">Submit</ion-button>
+
   </form>
-</ion-content>
+</ion-content> -->
+    <!-- <ion-button color="primary" (click)="addField()">Add Field</ion-button> -->
+    <!-- <ion-button type="submit" color="primary">Submit</ion-button> -->
+

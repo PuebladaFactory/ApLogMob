@@ -1,10 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" routerLink="/home/notas/detail/{{documentId}}"></ion-back-button>
+
+    </ion-buttons>
+    <ion-title>Editar</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+
 <form [formGroup]="documentForm" (submit)="onSubmit()">
   <ion-item *ngFor="let control of documentForm.controls | keyvalue">
-    <ion-label position="stacked">{{control.key}}</ion-label>
-    <ion-input type="text" [formControlName]="control.key"></ion-input>
-    <ion-button color="danger" (click)="removeField(control.key)">Remove</ion-button>
+    <ion-label position="stacked">{{control?.key}}</ion-label>
+    <ion-input type="text" [formControlName]="control?.key"></ion-input>
+    <ion-button slot="end" color="danger" (click)="removeField(control.key)" style="background-color: transparent;">
+      <ion-icon name="close-outline" outline></ion-icon>
+    </ion-button>
   </ion-item>
   <ion-button color="primary" (click)="addField()">Add Field</ion-button>
   <ion-button type="submit" color="primary">Submit</ion-button>
 
+
+  
 </form>
+</ion-content>

@@ -27,13 +27,13 @@ export class DetailsPage implements OnInit {
       this.nota = nota;
       this.nota.id = notaId;
       // Obtener los nombres de los campos adicionales
-      this.otherFields = Object.keys(nota).filter(key => key !== 'titulo' && key !== 'comentario');
+      this.otherFields = Object.keys(nota)
     });
   }
 
   async deleteNota(notaId: string, titulo: string): Promise<void> {
     const alert = await this.alertController.create({
-      message: `Seguro de borrar ? ${titulo}?`,
+      message: `Confirma borrar ? ${titulo}?`,
       buttons: [
         {
           text: 'Cancelar',

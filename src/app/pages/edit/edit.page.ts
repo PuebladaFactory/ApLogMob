@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { LoadingController, AlertController } from "@ionic/angular";
 import { FirestoreService } from "src/app/services/data/firestore.service";
 
+
+
 @Component({
   selector: "app-edit",
   templateUrl: "./edit.page.html",
@@ -20,24 +22,31 @@ export class EditPage implements OnInit {
     private alertController: AlertController,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) {
 
-  ngOnInit() {
-    this.documentId = this.route.snapshot.paramMap.get('id');
-    this.firestoreService.getNotaDetail(this.documentId).subscribe(document => {
-      this.documentData = document;
-      this.createForm();
-    });
+    this.documentForm = new FormGroup({});
   }
 
+
+    ngOnInit() {
+      this.documentId = this.route.snapshot.paramMap.get('id');
+      this.firestoreService.getNotaDetail(this.documentId).subscribe(document => {
+        this.documentData = document;
+        if (this.documentData) {
+          this.createForm();
+        } else { console.log("no data")
+          // handle the case where documentData is not defined
+        }
+      });
+    }
+
   createForm() {
-    const formControls = {};
+    this.documentForm = this.formBuilder.group({});
     for (const key in this.documentData) {
       if (this.documentData.hasOwnProperty(key)) {
-        formControls[key] = new FormControl(this.documentData[key]);
+        this.documentForm.addControl(key, new FormControl(this.documentData[key]));
       }
     }
-    this.documentForm = new FormGroup(formControls);
   }
 
   addField() {

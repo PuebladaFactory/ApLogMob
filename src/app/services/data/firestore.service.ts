@@ -8,6 +8,7 @@ import {
   docData,
   deleteDoc,
   updateDoc,
+  setDoc,
 } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 
@@ -15,7 +16,8 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class FirestoreService {
-  constructor(private readonly firestore: Firestore) {}
+  constructor(private readonly firestore: Firestore, 
+    ) {}
 
   // createNota(titulo: string, comentario: string): Promise<any> {
   //   return addDoc(collection(this.firestore, "notas"), {
@@ -47,9 +49,23 @@ export class FirestoreService {
     return deleteDoc(notaDocRef);
   }
 
+  // este metodo solo registra modificaiones, no  deja borrar campos
   updateNota(nota: any): Promise<void> {
+    console.log(nota);
     const noteDocRef = doc(this.firestore, `notas/${nota.id}`);
-    return updateDoc(noteDocRef, nota);
+    try {
+      return updateDoc(noteDocRef, nota);
+    } catch (error) {
+      console.error("Error al actualizar la nota:", error);
+      throw error;
+    }
   }
   
+  // este metodo reemplaza la nota con el obj que le pasamos (permite borrar campos)
+
+
+  updateNota2(notaId: string, nota: any): Promise<void> {
+    const notaDocRef = doc(this.firestore, `notas/${notaId}`);
+    return setDoc(notaDocRef, nota);
+  }
 }

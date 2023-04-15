@@ -5,26 +5,26 @@
     </ion-buttons>
     <ion-title>Detalles</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/home/notas/edit/{{nota?.id}}" fill="clear" slot="end">
+      <ion-button routerLink="/home/notas/edit/{{nota?.id}}" fill="clear">
         <ion-icon name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="primary">
-      <ion-button fill="end"></ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
   <ion-list>
+    <ion-item>
+      <ion-label color="primary" class="ion-text-uppercase">{{ nota?.titulo }}</ion-label>
+    </ion-item>
     <ion-item *ngFor="let field of otherFields">
       <ion-label>{{ field }}</ion-label>
       <ion-input [value]="nota[field]" disabled></ion-input>
     </ion-item>
   </ion-list>
   <h3>Docs</h3>
-  <p>Aca van las imagenes</p>
+  <p>Aqui van las imagenes</p>
   <ion-button color="light" (click)="changeImage()">
     <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
   </ion-button>
-
 </ion-content>

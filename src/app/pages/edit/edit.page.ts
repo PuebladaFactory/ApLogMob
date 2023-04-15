@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LoadingController, AlertController } from "@ionic/angular";
+import { Subscription } from "rxjs";
 import { FirestoreService } from "src/app/services/data/firestore.service";
 
 
@@ -15,6 +16,8 @@ export class EditPage implements OnInit {
   documentId: string;
   documentData: any;
   documentForm: FormGroup;
+  documentSubscription: Subscription;
+  guardandoCambios = false; // <--- Agrega esta propiedad
 
   constructor(
     private firestoreService: FirestoreService,
@@ -27,19 +30,18 @@ export class EditPage implements OnInit {
     this.documentForm = new FormGroup({});
   }
 
-
-    ngOnInit() {
+   ngOnInit() {
       this.documentId = this.route.snapshot.paramMap.get('id');
-      this.firestoreService.getNotaDetail(this.documentId).subscribe(document => {
+      this.documentSubscription = this.firestoreService.getNotaDetail(this.documentId).subscribe(document => {
         this.documentData = document;
         if (this.documentData) {
           this.createForm();
-        } else { console.log("no data")
-          // handle the case where documentData is not defined
+        } else {
+          // Si documentData es null, redirigir al usuario a la página de notas
+          this.router.navigateByUrl('home/notas');
         }
       });
     }
-
   createForm() {
     this.documentForm = this.formBuilder.group({});
     for (const key in this.documentData) {
@@ -60,15 +62,15 @@ export class EditPage implements OnInit {
     this.documentForm.removeControl(fieldName);
   }
 
-  onSubmit() {
-    const updatedDocument = this.documentForm.value;
-    console.log('Updated document:', updatedDocument);
-    // Send the updated document to the server
-    // this.myDataService.updateDocument(this.documentId, updatedDocument).subscribe();
-  }
+  // onSubmit() {
+  //   const updatedDocument = this.documentForm.value;
+  //   console.log('Updated document:', updatedDocument);
+  //   // Send the updated document to the server
+  //   // this.myDataService.updateDocument(this.documentId, updatedDocument).subscribe();
+  // }
 
 
-  async deleteNota(notaId: string, titulo: string): Promise<void> {
+ async deleteNota(notaId: string, titulo: string): Promise<void> {
     const alert = await this.alertController.create({
       message: `Seguro de borrar ? ${titulo}?`,
       buttons: [
@@ -83,6 +85,9 @@ export class EditPage implements OnInit {
           text: 'Ok',
           handler: () => {
             this.firestoreService.deleteNota(notaId).then(() => {
+              // Cancelar la suscripción y establecer documentData en null
+              this.documentSubscription.unsubscribe();
+              this.documentData = null;
               this.router.navigateByUrl('home/notas');
             });
           },
@@ -91,7 +96,24 @@ export class EditPage implements OnInit {
     });
   
     await alert.present();
-
-
   }
+
+
+  async guardarCambios() {
+    this.guardandoCambios = true; // deshabilitar el botón "Guardar"
+    const updatedDocument = this.documentForm.value;
+    console.log('Updated document:', updatedDocument);
+    try {
+      const notaActualizada = {id: this.documentId, ...updatedDocument};
+      await this.firestoreService.updateNota2(notaActualizada.id, notaActualizada);
+      console.log('Document updated successfully');
+      this.guardandoCambios = false; // habilitar el botón "Guardar"
+      // Opcionalmente, mostrar un mensaje de éxito al usuario
+    } catch (error) {
+      console.error('Error updating document:', error);
+      this.guardandoCambios = false; // habilitar el botón "Guardar"
+      // Opcionalmente, mostrar un mensaje de error al usuario
+    }
+  }
+
 }

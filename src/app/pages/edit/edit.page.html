@@ -13,11 +13,11 @@
       <ion-button (click)="addField()">
         <ion-icon slot="icon-only"  name="add-circle-outline"></ion-icon>
       </ion-button>
-      <ion-button color="danger" 
-      (click)="deleteNota(nota?.id, nota?.titulo)">
+      <ion-button color="danger"  [disabled]="guardandoCambios"
+      (click)="deleteNota(documentData.id, documentData.titulo)">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>
-      <ion-button  (click)="onSubmit()">
+      <ion-button  (click)="guardarCambios()">
         <ion-icon slot="icon-only" name="save"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -25,7 +25,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="documentForm" (submit)="onSubmit()">
+  <form [formGroup]="documentForm">
 
     <ion-item *ngIf="documentForm.controls['titulo']">
       <ion-label position="stacked" class="titulo-label">Título:</ion-label>

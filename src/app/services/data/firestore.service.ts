@@ -1,57 +1,77 @@
 import { Injectable } from "@angular/core";
 import {
-  collectionData,
+  Firestore,
   collection,
   addDoc,
-  Firestore,
   doc,
-  docData,
   deleteDoc,
   updateDoc,
-  setDoc,
+  collectionData, // import collectionData
+  docData,
+  onSnapshot
 } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject, of } from "rxjs";
+import { map, shareReplay, tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
 export class FirestoreService {
-  constructor(private readonly firestore: Firestore, 
-    ) {}
+  private notasCache: any = {};
+  private notasCacheSubject = new BehaviorSubject<any>(null);
 
-  // createNota(titulo: string, comentario: string): Promise<any> {
-  //   return addDoc(collection(this.firestore, "notas"), {
-  //     titulo,
-  //     comentario,
-  //   });
-  // }
+  constructor(private readonly firestore: Firestore) {}
 
   createNota(nota: any): Promise<any> {
+    console.log("Adding new nota to Firestore:", nota);
     return addDoc(collection(this.firestore, "notas"), nota);
   }
 
-  // We create the function:
+
   getNotasList(): Observable<any[]> {
-    return collectionData<any>(collection(this.firestore, "notas"), {
-      idField: "id",
-    });
+    const notasRef = collection(this.firestore, "notas");
+    return collectionData(notasRef, { idField: "id" }).pipe(
+      tap((notas) => {
+        console.log("Fetching list of notas from Firestore:", notas);
+        this.notasCache = notas.reduce((acc, nota) => {
+          acc[nota.id] = nota;
+          return acc;
+        }, {});
+        this.notasCacheSubject.next(this.notasCache);
+      }),
+      shareReplay(1)
+    );
   }
+  
+
 
   getNotaDetail(notaId: string): Observable<any> {
-    const notaRef = doc(this.firestore, `notas/${notaId}`);
-    return docData<any>(notaRef, {
-      idField: "id",
-    });
+    if (this.notasCache[notaId]) {
+      console.log("Fetching nota detail from cache:", this.notasCache[notaId]);
+      return of(this.notasCache[notaId]);
+    } else {
+      const notaRef = doc(this.firestore, `notas/${notaId}`);
+      return docData<any>(notaRef, { idField: "id" }).pipe(
+        tap((nota) => {
+          console.log("Fetching nota detail from Firestore:", nota);
+          this.notasCache[notaId] = nota;
+          this.notasCacheSubject.next(this.notasCache);
+        }),
+        shareReplay(1)
+      );
+    }
   }
 
+
+
   deleteNota(notaId: string): Promise<void> {
+    console.log("Deleting nota from Firestore:", notaId);
     const notaDocRef = doc(this.firestore, `notas/${notaId}`);
     return deleteDoc(notaDocRef);
   }
 
-  // este metodo solo registra modificaiones, no  deja borrar campos
   updateNota(nota: any): Promise<void> {
-    console.log(nota);
+    console.log("Updating nota in Firestore:", nota);
     const noteDocRef = doc(this.firestore, `notas/${nota.id}`);
     try {
       return updateDoc(noteDocRef, nota);
@@ -60,12 +80,10 @@ export class FirestoreService {
       throw error;
     }
   }
-  
-  // este metodo reemplaza la nota con el obj que le pasamos (permite borrar campos)
-
 
   updateNota2(notaId: string, nota: any): Promise<void> {
+    console.log("Updating nota in Firestore:", nota);
     const notaDocRef = doc(this.firestore, `notas/${notaId}`);
-    return setDoc(notaDocRef, nota);
+    return updateDoc(notaDocRef, nota);
   }
 }

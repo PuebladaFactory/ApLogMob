@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { AvatarService } from 'src/app/services/avatar.service';
-
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-perfil',
@@ -12,7 +10,6 @@ import { AvatarService } from 'src/app/services/avatar.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-
 
   ngOnInit() {
   }
@@ -24,9 +21,9 @@ export class PerfilPage implements OnInit {
   constructor(
     private avatarService: AvatarService,
     private authService: AuthService,
+    private imageService: ImageService,
     private router: Router,
-    private loadingController: LoadingController,
-    private alertController: AlertController
+
   ) {
     this.avatarService.getUserProfile().subscribe((data) => {
       this.profile = data;
@@ -40,34 +37,9 @@ export class PerfilPage implements OnInit {
   }
 
   async changeImage() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.Base64,
-      source: CameraSource.Camera, // Camera, Photos or Prompt!
-    });
-
-    if (image) {
-      const loading = await this.loadingController.create();
-      await loading.present();
-
-      const result = await this.avatarService.uploadImage(image);
-      loading.dismiss();
-
-      if (!result) {
-        const alert = await this.alertController.create({
-          header: 'Upload failed',
-          message: 'There was a problem uploading your avatar.',
-          buttons: ['OK'],
-        });
-        await alert.present();
-      }
-    }
+    await this.imageService.changeAvatar();
   }
 
-
-
-  
   segmentChanged(ev: any) {
     this.segment = ev.detail.value;
   }

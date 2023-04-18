@@ -1,0 +1,22 @@
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home/notas/create">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <ion-item *ngFor="let nota of notasList | async" routerLink="./detail/{{nota.id}}">
+    <ion-label>
+      <h2>{{ nota.titulo}}</h2>
+      <p>Comentario: {{ nota.comentario }}</p>
+      <p>Id: {{ nota.id }}</p>
+    </ion-label>
+  </ion-item>
+</ion-content>

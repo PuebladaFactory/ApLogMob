@@ -1,38 +1,21 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { AlertController, LoadingController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
-import { AvatarService } from '../services/avatar.service';
+import { Injectable } from '@angular/core';
 
-@Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { LoadingController, AlertController } from '@ionic/angular';
+import { AvatarService } from './avatar.service';
+
+@Injectable({
+  providedIn: 'root'
 })
-export class HomePage {
-  profile = null;
+export class ImageService {
 
   constructor(
     private avatarService: AvatarService,
-    private authService: AuthService,
-    private router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController, 
-    
-  ) {
-    this.avatarService.getUserProfile().subscribe((data) => {
-      this.profile = data;
-    });
-  }
+    private alertController: AlertController
+  ) { }
 
-  async logout() {
-    await this.authService.logout();
-    this.router.navigateByUrl('/', { replaceUrl: true });
-    
-  }
-
-  async changeImage() {
+  async changeAvatar() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
@@ -57,4 +40,7 @@ export class HomePage {
       }
     }
   }
+
+
+  
 }

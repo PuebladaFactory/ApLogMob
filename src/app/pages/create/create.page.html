@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+
+<ion-buttons slot="start">
+  <ion-back-button></ion-back-button>
+</ion-buttons>
+
+<ion-title>Agregar Nota</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="createNotaForm" (submit)="createNota()">
+
+<ion-item>
+  <ion-label stacked>Titulo</ion-label>
+  <ion-input formControlName="titulo" type="text" placeholder="Titulo">
+  </ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label stacked>Comentario</ion-label>
+  <ion-textarea formControlName="comentario" type="text" placeholder="Comentarios">
+  </ion-textarea>
+</ion-item>
+
+<ng-container *ngFor="let campo of campos; let i=index">
+  <ion-item>
+    <ion-label stacked>{{ campo.label }}</ion-label>
+    <ion-input formControlName="{{ campo.nombre }}" type="text" placeholder="{{ campo.placeholder }}">
+    </ion-input>
+    <ion-button (click)="eliminarCampo(i)" slot="end" fill="clear" color="danger">
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ng-container>
+
+<ion-button expand="block" type="button" (click)="agregarCampo()">
+  Agregar campo
+</ion-button>
+
+<ion-button expand="block" type="submit" [disabled]="!createNotaForm.valid">
+  Agregar nota
+</ion-button>
+  </form>
+</ion-content>

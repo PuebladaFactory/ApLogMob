@@ -29,6 +29,29 @@ const routes: Routes = [
       },
 
       {
+        path: 'notas',
+        loadChildren: () => 
+        import('../pages/notas/notas.module').then( m => m.NotasPageModule)
+      },
+      {
+        path: 'notas/create',
+        loadChildren: () => 
+        import('../pages/create/create.module').then( m => m.CreatePageModule)
+      },
+      {
+        path: 'notas/detail/:id',
+        loadChildren: () => import('../pages/details/details.module').then( m => m.DetailsPageModule)
+      },
+
+      {
+        path: 'notas/edit/:id',
+        loadChildren: () => 
+        import('../pages/edit/edit.module').then( m => m.EditPageModule)
+      },
+
+
+
+      {
         path: "",
         redirectTo: "/home/ops",
         pathMatch: "full",

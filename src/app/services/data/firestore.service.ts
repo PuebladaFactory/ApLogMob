@@ -8,7 +8,8 @@ import {
   updateDoc,
   collectionData,
   docData,
-  onSnapshot
+  onSnapshot,
+  setDoc
 } from "@angular/fire/firestore";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { map, shareReplay, tap } from "rxjs/operators";
@@ -61,6 +62,7 @@ export class FirestoreService {
     return deleteDoc(notaDocRef);
   }
 
+  // solo agrega las modificaciones, no cambia el doc original.
   updateNota(nota: any): Promise<void> {
     console.log("Updating nota in Firestore:", nota);
     const noteDocRef = doc(this.firestore, `notas/${nota.id}`);
@@ -72,9 +74,15 @@ export class FirestoreService {
     }
   }
 
+  // Reemplaza el doc existente con el provisto
   updateNota2(notaId: string, nota: any): Promise<void> {
     console.log("Updating nota in Firestore:", nota);
     const notaDocRef = doc(this.firestore, `notas/${notaId}`);
-    return updateDoc(notaDocRef, nota);
+    try {
+      return setDoc(notaDocRef, nota);
+    } catch (error) {
+      console.error("Error al actualizar la nota:", error);
+      throw error;
+    }
   }
 }

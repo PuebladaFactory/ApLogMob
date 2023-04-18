@@ -31,32 +31,7 @@ export class DetailsPage implements OnInit {
     });
   }
 
-  async deleteNota(notaId: string, titulo: string): Promise<void> {
-    const alert = await this.alertController.create({
-      message: `Confirma borrar ? ${titulo}?`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: blah => {
-            console.log('Confirma cancelacion');
-          },
-        },
-        {
-          text: 'Ok',
-          handler: () => {
-            this.firestoreService.deleteNota(notaId).then(() => {
-              this.router.navigateByUrl('home/notas');
-            });
-          },
-        },
-      ],
-    });
-  
-    await alert.present();
-
-
-  }
+ 
 
 
   changeImage(){}

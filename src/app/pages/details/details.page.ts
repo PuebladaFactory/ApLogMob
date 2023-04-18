@@ -23,15 +23,17 @@ export class DetailsPage implements OnInit {
 
   ngOnInit() {
     const notaId: string = this.route.snapshot.paramMap.get('id');
-    this.firestoreService.getNotaDetail(notaId).subscribe(nota => {
+    this.firestoreService.getNotaDetail(notaId).subscribe((nota: any) => {
       this.nota = nota;
-      this.nota.id = notaId;
-      // Obtener los nombres de los campos adicionales
-      this.otherFields = Object.keys(nota)
+      if (this.nota) {
+        this.nota.id = notaId;
+        // Obtener los nombres de los campos adicionales
+        this.otherFields = Object.keys(nota);
+      }
     });
   }
 
- 
+
 
 
   changeImage(){}

@@ -11,9 +11,13 @@ import { ImageService } from 'src/app/services/image.service';
 })
 export class PerfilPage implements OnInit {
 
+
+  profile: any = {}; // initialize to empty object
+
+
   ngOnInit() {
   }
-  profile = null;
+
 
   public segment: string = "list";
   public arr = new Array(25);
@@ -36,10 +40,20 @@ export class PerfilPage implements OnInit {
     
   }
 
+
   async changeImage() {
-    await this.imageService.changeAvatar();
+    try {
+      await this.imageService.changeAvatar();
+    } catch (error) {
+      if (error.message === 'User cancelled photos app') {
+        console.log('User cancelled selecting a photo.');
+      } else {
+        console.error(error);
+      }
+    }
   }
 
+  
   segmentChanged(ev: any) {
     this.segment = ev.detail.value;
   }

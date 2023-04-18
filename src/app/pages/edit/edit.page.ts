@@ -62,12 +62,7 @@ export class EditPage implements OnInit {
     this.documentForm.removeControl(fieldName);
   }
 
-  // onSubmit() {
-  //   const updatedDocument = this.documentForm.value;
-  //   console.log('Updated document:', updatedDocument);
-  //   // Send the updated document to the server
-  //   // this.myDataService.updateDocument(this.documentId, updatedDocument).subscribe();
-  // }
+
 
 
  async deleteNota(notaId: string, titulo: string): Promise<void> {

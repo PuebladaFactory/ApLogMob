@@ -26,7 +26,15 @@ const routes: Routes = [
 		path: '',
 		redirectTo: '/login',
 		pathMatch: 'full'
-	},
+	},  {
+    path: 'photo-modal',
+    loadChildren: () => import('./pages/photo-modal/photo-modal.module').then( m => m.PhotoModalPageModule)
+  },
+  {
+    path: 'photo-modal',
+    loadChildren: () => import('./pages/photo-modal/photo-modal.module').then( m => m.PhotoModalPageModule)
+  },
+
 
 
 

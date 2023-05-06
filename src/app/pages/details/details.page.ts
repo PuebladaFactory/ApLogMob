@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { FirestoreService } from 'src/app/services/data/firestore.service';
+import { PhotoModalPage } from '../photo-modal/photo-modal.page';
+
 
 @Component({
   selector: 'app-details',
@@ -16,6 +18,7 @@ export class DetailsPage implements OnInit {
 
   constructor(
     private firestoreService: FirestoreService,
+    private modalController: ModalController,
     private route: ActivatedRoute, 
     private alertController: AlertController,
     private router: Router
@@ -35,7 +38,18 @@ export class DetailsPage implements OnInit {
 
 // galeria
 
-photos: string[] = ["http://i.imgur.com/Dllfd.jpg"];
+// photos: string[] = ["http://i.imgur.com/Dllfd.jpg"];
+
+// addPhoto(url: string): void {
+//   this.photos.push(url);
+// }
+
+// removePhoto(index: number): void {
+//   this.photos.splice(index, 1);
+// }
+
+photos: string[] = ["http://i.imgur.com/9uXDB.jpg", "https://i.imgur.com/7rl4O.jpeg"];
+
 
 addPhoto(url: string): void {
   this.photos.push(url);
@@ -45,6 +59,15 @@ removePhoto(index: number): void {
   this.photos.splice(index, 1);
 }
 
-
+async showPhoto(i: number) {
+  const photoUrl = this.photos[i];
+  const modal = await this.modalController.create({
+    component: PhotoModalPage,
+    componentProps: {
+      photoUrl
+    }
+  });
+  return await modal.present();
+}
   changeImage(){}
 }

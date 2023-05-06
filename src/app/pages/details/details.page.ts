@@ -33,7 +33,17 @@ export class DetailsPage implements OnInit {
     });
   }
 
+// galeria
 
+photos: string[] = ["http://i.imgur.com/Dllfd.jpg"];
+
+addPhoto(url: string): void {
+  this.photos.push(url);
+}
+
+removePhoto(index: number): void {
+  this.photos.splice(index, 1);
+}
 
 
   changeImage(){}

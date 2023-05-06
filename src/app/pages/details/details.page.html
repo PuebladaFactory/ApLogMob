@@ -28,3 +28,25 @@
     <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
   </ion-button>
 </ion-content>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let photo of photos; let i = index">
+      <ion-thumbnail slot="start">
+        <img [src]="photo">
+      </ion-thumbnail>
+      <ion-label>Photo {{i}}</ion-label>
+      <ion-button (click)="removePhoto(i)" slot="end" color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label position="floating">Add photo URL</ion-label>
+    <ion-input #photoUrl type="text"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="addPhoto(photoUrl.value.toString()); photoUrl.value=''">Add</ion-button>
+
+</ion-content>

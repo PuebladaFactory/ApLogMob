@@ -22,29 +22,29 @@ const routes: Routes = [
           ),
       },
 
-      {
-        path: "ops",
-        loadChildren: () =>
-          import("../pages/ops/ops.module").then((m) => m.OpsPageModule),
-      },
+      // {
+      //   path: "ops",
+      //   loadChildren: () =>
+      //     import("../pages/ops/ops.module").then((m) => m.OpsPageModule),
+      // },
 
       {
-        path: 'notas',
+        path: 'operaciones',
         loadChildren: () => 
         import('../pages/notas/notas.module').then( m => m.NotasPageModule)
       },
       {
-        path: 'notas/create',
+        path: 'operaciones/create',
         loadChildren: () => 
         import('../pages/create/create.module').then( m => m.CreatePageModule)
       },
       {
-        path: 'notas/detail/:id',
+        path: 'operaciones/detail/:id',
         loadChildren: () => import('../pages/details/details.module').then( m => m.DetailsPageModule)
       },
 
       {
-        path: 'notas/edit/:id',
+        path: 'operaciones/edit/:id',
         loadChildren: () => 
         import('../pages/edit/edit.module').then( m => m.EditPageModule)
       },
@@ -53,7 +53,7 @@ const routes: Routes = [
 
       {
         path: "",
-        redirectTo: "/home/ops",
+        redirectTo: "/home/operaciones",
         pathMatch: "full",
       },
     ],
@@ -61,7 +61,7 @@ const routes: Routes = [
 
   {
     path: "",
-    redirectTo: "/home/ops",
+    redirectTo: "/home/operaciones",
     pathMatch: "full",
   },
 ];

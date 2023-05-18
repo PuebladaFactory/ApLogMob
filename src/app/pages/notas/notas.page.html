@@ -19,9 +19,9 @@
 <ion-content class="padding">
   <ion-item *ngFor="let nota of notasList | async" routerLink="./detail/{{nota.id}}">
     <ion-label>
-      <h2>{{ nota.titulo}}</h2>
-      <p>Comentario: {{ nota.comentario }}</p>
-      <p>Id: {{ nota.id }}</p>
+      <h2>{{ nota.cliente}}</h2>
+      <p>{{ nota.comentario }}</p>
+      <!-- <p>Id: {{ nota.id }}</p> -->
     </ion-label>
   </ion-item>
 </ion-content>

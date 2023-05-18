@@ -4,30 +4,39 @@
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Detalles</ion-title>
-    <ion-buttons slot="end">
+
+    <!-- USAR SI HABILITAMOS EDICION DE OPERACIONES POR EL CHOFER -->
+    <!-- <ion-buttons slot="end">
       <ion-button routerLink="/home/operaciones/edit/{{nota?.id}}" fill="clear">
         <ion-icon name="create-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-list>
     <ion-item>
-      <ion-label color="primary" class="ion-text-uppercase">{{ nota?.titulo }}</ion-label>
+      <ion-label color="primary" class="ion-text-uppercase">{{ nota?.cliente }}</ion-label>
+  
+    <!-- usar si habilitamos la posibilidad de agregar campos -->
     </ion-item>
-    <ion-item *ngFor="let field of otherFields">
+
+  
+    <ion-item >
+      <ion-label>{{ nota?.comentario }}</ion-label>
+ 
+    </ion-item>
+  
+    <!-- <ion-item *ngFor="let field of otherFields">
       <ion-label>{{ field }}</ion-label>
       <ion-input [value]="nota[field]" disabled></ion-input>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
-  <h3>Docs</h3>
-  <p>Aqui van las imagenes</p>
-  <ion-button color="light" (click)="changeImage()">
-    <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
-  </ion-button>
-</ion-content>
+  <h3>Comprobantes de la Operacion</h3>
+  <!-- <p>Aqui van las imagenes</p> -->
+
+
 
 <!-- <ion-content>
   <ion-list>
@@ -50,7 +59,7 @@
   <ion-button expand="block" (click)="addPhoto(photoUrl.value.toString()); photoUrl.value=''">Add</ion-button>
 
 </ion-content> -->
-<ion-content>
+
   <ion-list>
     <ion-item *ngFor="let photo of photos; let i = index">
       <ion-thumbnail slot="start" (click)="showPhoto(i)">
@@ -62,7 +71,9 @@
       </ion-button>
     </ion-item>
   </ion-list>
-
+  <ion-button color="light" (click)="changeImage()">
+    <ion-icon slot="icon-only" name="camera-outline" color="medium"> </ion-icon>
+  </ion-button>
   <ion-item>
     <ion-label position="floating">Add photo URL</ion-label>
     <ion-input #photoUrl type="text"></ion-input>
